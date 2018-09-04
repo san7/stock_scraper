@@ -9,6 +9,7 @@ import csv
 proxy_support = urlrequest.ProxyHandler({'http' : 'http://proxy.cht.com.tw:8080', 
                                          'https': 'https://proxy.cht.com.tw:8080'})
 opener = urlrequest.build_opener(proxy_support)
+opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36')]
 urlrequest.install_opener(opener)
 
 

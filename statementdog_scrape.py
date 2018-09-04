@@ -40,6 +40,8 @@ proxies = {
   'https': 'https://proxy.cht.com.tw:8080',
 }
 
+headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
+
 companyList = []
 with open('company_out.csv', encoding='utf-8') as fp:
 	for line in fp:
@@ -65,12 +67,12 @@ except:
 print('lastIndex=' + str(lastIndex))
 
 session = requests.Session()
-r1 = session.get('https://statementdog.com/users/sign_in', proxies=proxies)
+r1 = session.get('https://statementdog.com/users/sign_in', headers = headers, proxies=proxies)
 bs = BeautifulSoup(r1.text, 'html.parser')
 token = bs.select('input[name="authenticity_token"]')[0]['value']
 #print(token)
 params = {'authenticity_token' : token, 'user[email]': 'xxxx', 'user[password]': 'yyyy', 'user[remember_me]' : '1'}
-r2 = session.post('https://statementdog.com/users/sign_in', data = params, proxies=proxies)
+r2 = session.post('https://statementdog.com/users/sign_in', headers = headers, data = params, proxies=proxies)
 print(r2)
 #print(r2.cookies.get_dict())
 
@@ -82,7 +84,7 @@ with open('dog.csv', 'a', newline='', encoding='utf-8') as fp:
 		print("scrape company " + companyList[i] + "...")
 		compStatsList = []
 		url = 'https://statementdog.com/api/v1/fundamentals/{}/2017/1/2018/4/cf?queried_by_user=true&_=15'.format(companyList[i])
-		r3 = session.get(url, proxies=proxies)
+		r3 = session.get(url, headers = headers, proxies=proxies)
 		jsonObj = json.loads(r3.text)
 		compStatsList.append(companyList[i])
 		for dataId in targetDataIdList:
