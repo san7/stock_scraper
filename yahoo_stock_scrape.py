@@ -61,11 +61,7 @@ with open('revenue.csv', 'a', newline='', encoding='utf-8') as fp:
 		writer.writerow(revenueList)
 		fp.flush()
 		sleep(0.5)
-		
 
-#df = pd.DataFrame.from_dict(finalDict, orient='index')
-#print(df)
-#df.to_csv('revenue.csv')
 
 
 
