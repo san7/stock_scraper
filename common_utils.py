@@ -1,6 +1,6 @@
 
-HTTP_PROXY = 'http://proxy.cht.com.tw:8080'
-HTTPS_PROXY = 'https://proxy.cht.com.tw:8080'
+HTTP_PROXY = 'http://proxy.xxx.com.tw:8080'
+HTTPS_PROXY = 'https://proxy.xxx.com.tw:8080'
 
 MY_USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
 MY_DOG_USER_NAME = 'xxxx'
