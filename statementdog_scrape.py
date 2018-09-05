@@ -5,7 +5,7 @@ import requests
 import json
 import csv
 
-from common_utils import getLastCompanyIndex
+from common_utils import *
 
 """
 "65":{"label":"EPS","data":[[0,"1.53"],[1,"2.0"],[2,"2.0"],[3,"1.73"],[4,"1.85"],[5,"2.3"],[6,"2.94"],[7,"3.09"],[8,"3.05"],[9,"3.06"],[10,"2.91"],
@@ -42,16 +42,10 @@ proxies = {
   'https': 'https://proxy.cht.com.tw:8080',
 }
 
-headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
+headers = {'User-Agent' : MY_USER_AGENT}
 
-companyList = []
-with open('company_out.csv', encoding='utf-8') as fp:
-	for line in fp:
-		splittedData = line.split(',')
-		companyList.append(splittedData[0])
+companyList = getCompanyList()
 #print(companyList)
-
-
 lastIndex = getLastCompanyIndex('dog.csv', companyList)
 
 input("Press Enter to continue...")
@@ -61,7 +55,7 @@ r1 = session.get('https://statementdog.com/users/sign_in', headers = headers, pr
 bs = BeautifulSoup(r1.text, 'html.parser')
 token = bs.select('input[name="authenticity_token"]')[0]['value']
 #print(token)
-params = {'authenticity_token' : token, 'user[email]': 'xxxx', 'user[password]': 'yyyy', 'user[remember_me]' : '1'}
+params = {'authenticity_token' : token, 'user[email]': MY_DOG_USER_NAME, 'user[password]': MY_DOG_PASSWORD, 'user[remember_me]' : '1'}
 r2 = session.post('https://statementdog.com/users/sign_in', headers = headers, data = params, proxies=proxies)
 print(r2)
 #print(r2.cookies.get_dict())

@@ -6,22 +6,17 @@ from time import sleep
 import re
 import csv
 
-from common_utils import getLastCompanyIndex
+from common_utils import *
 
-proxy_support = urlrequest.ProxyHandler({'http' : 'http://proxy.cht.com.tw:8080', 
-                                         'https': 'https://proxy.cht.com.tw:8080'})
+proxy_support = urlrequest.ProxyHandler({'http' : HTTP_PROXY, 
+                                         'https': HTTPS_PROXY})
 opener = urlrequest.build_opener(proxy_support)
-opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36')]
+opener.addheaders = [('User-agent', MY_USER_AGENT)]
 urlrequest.install_opener(opener)
 
 
-companyList = []
-with open('company_out.csv', encoding='utf-8') as fp:
-	for line in fp:
-		splittedData = line.split(',')
-		companyList.append(splittedData[0])
+companyList = getCompanyList()
 #print(companyList)
-
 lastIndex = getLastCompanyIndex('revenue.csv', companyList)
 
 input("Press Enter to continue...")
@@ -51,7 +46,7 @@ with open('revenue.csv', 'a', newline='', encoding='utf-8') as fp:
 			revenueList.extend(tmpList)
 		writer.writerow(revenueList)
 		fp.flush()
-		sleep(0.5)
+		sleep(1)
 
 
 
