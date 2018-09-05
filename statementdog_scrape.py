@@ -5,6 +5,8 @@ import requests
 import json
 import csv
 
+from common_utils import getLastCompanyIndex
+
 """
 "65":{"label":"EPS","data":[[0,"1.53"],[1,"2.0"],[2,"2.0"],[3,"1.73"],[4,"1.85"],[5,"2.3"],[6,"2.94"],[7,"3.09"],[8,"3.05"],[9,"3.06"],[10,"2.91"],
 		[11,"2.81"],[12,"2.5"],[13,"2.8"],[14,"3.73"],[15,"3.86"],[16,"3.38"],[17,"2.56"],[18,"3.47"],[19,"3.83"],[20,"3.46"],[21,"2.79"]]},
@@ -50,21 +52,9 @@ with open('company_out.csv', encoding='utf-8') as fp:
 #print(companyList)
 
 
-try:
-	with open('dog.csv', 'r', encoding='utf-8') as fp:
-		lines = fp.readlines()
-		lastLine = lines[-1]
-		lastCompany = lastLine[0:4]
-except Exception as e:
-	print(e)
-	lastCompany = None
-print('lastCompany=' + str(lastCompany))
+lastIndex = getLastCompanyIndex('dog.csv', companyList)
 
-try:
-	lastIndex = companyList.index(lastCompany)
-except:
-	lastIndex = 0
-print('lastIndex=' + str(lastIndex))
+input("Press Enter to continue...")
 
 session = requests.Session()
 r1 = session.get('https://statementdog.com/users/sign_in', headers = headers, proxies=proxies)

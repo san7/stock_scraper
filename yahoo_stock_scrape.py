@@ -6,6 +6,8 @@ from time import sleep
 import re
 import csv
 
+from common_utils import getLastCompanyIndex
+
 proxy_support = urlrequest.ProxyHandler({'http' : 'http://proxy.cht.com.tw:8080', 
                                          'https': 'https://proxy.cht.com.tw:8080'})
 opener = urlrequest.build_opener(proxy_support)
@@ -20,22 +22,10 @@ with open('company_out.csv', encoding='utf-8') as fp:
 		companyList.append(splittedData[0])
 #print(companyList)
 
+lastIndex = getLastCompanyIndex('revenue.csv', companyList)
 
-try:
-	with open('revenue.csv', 'r', encoding='utf-8') as fp:
-		lines = fp.readlines()
-		lastLine = lines[-1]
-		lastCompany = lastLine[0:4]
-except Exception as e:
-	print(e)
-	lastCompany = None
-print('lastCompany=' + str(lastCompany))
+input("Press Enter to continue...")
 
-try:
-	lastIndex = companyList.index(lastCompany)
-except:
-	lastIndex = 0
-print('lastIndex=' + str(lastIndex))
 
 startIdx = 12 # 前面多餘資料的個數
 stepSize = 9 # 一列有9個資料欄位
