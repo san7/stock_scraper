@@ -83,17 +83,23 @@ with open('dog.csv', 'a', newline='', encoding='utf-8') as fp:
 	for i in range(lastIndex, len(companyList)):
 		print("scrape company " + companyList[i] + "...")
 		compStatsList = []
+		isNoErr = True
 		url = 'https://statementdog.com/api/v1/fundamentals/{}/2017/1/2018/4/cf?queried_by_user=true&_=15'.format(companyList[i])
-		r3 = session.get(url, headers = headers, proxies=proxies)
-		jsonObj = json.loads(r3.text)
-		compStatsList.append(companyList[i])
-		for dataId in targetDataIdList:
-			for seasonIdx in range(seasonNum):
-				#print(jsonObj[dataId]['data'][seasonIdx][1])
-				compStatsList.append(jsonObj[dataId]['data'][seasonIdx][1])
-		writer.writerow(compStatsList)
-		fp.flush()
-		sleep(1)		
+		try:
+			r3 = session.get(url, headers = headers, proxies=proxies)
+			jsonObj = json.loads(r3.text)
+			compStatsList.append(companyList[i])
+			for dataId in targetDataIdList:
+				for seasonIdx in range(seasonNum):
+					#print(jsonObj[dataId]['data'][seasonIdx][1])
+					compStatsList.append(jsonObj[dataId]['data'][seasonIdx][1])
+		except Exception as e:
+			print(e)
+			isNoErr = False
+		if(isNoErr):			
+			writer.writerow(compStatsList)
+			fp.flush()
+		sleep(2)		
 		
 
 
