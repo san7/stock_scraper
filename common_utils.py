@@ -37,3 +37,11 @@ def getLastCompanyIndex(filename, companyList):
 		lastIndex = 0
 	
 	return lastIndex
+
+def getCompanyMap():
+	companyMap = {}
+	with open('company_out.csv', encoding='utf-8') as fp:
+		for line in fp:
+			splittedData = line.split(',')
+			companyMap[splittedData[0]] = splittedData[1]
+	return companyMap

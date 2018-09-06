@@ -1,5 +1,7 @@
 import pandas as pd
 
+from common_utils import *
+
 """
 01EPS|02近四季EPS|03每股淨值|04毛利率|05營業利益率|06ROE|07近四季ROE|08單季營收季增率|09單季營收年增率|10近4季營收季增率|11近4季營收年增率|
 12單季毛利季增率|13單季毛利年增率|14近4季毛利季增率|15近4季毛利年增率|16單季營業利益季增率|17單季營業利益年增率|18近4季營業利益季增率|19近4季營業利益年增率|
@@ -42,17 +44,30 @@ cond9 = df5[6*6+6-1] > 5 #06ROE
 cond10 = df5[7*6+6-1] > 15 #07近四季ROE
 
 selectedList = df5[cond1 & cond2 & cond3 & cond6 & cond9].index.tolist()
+
 # ============================================================
 
 selectedList = df5[(df5[5*6+5-1] > 5) & (df5[5*6+6-1] > 5) & (df5[6+9*5+offset] > 20) & (df5[6+9*6+offset] > 20)].index.tolist()
+
 print(df5.loc[1808,[6+9*5+offset]])
 
 # ============================================================
 
-print(selectedList)
+companyMap = getCompanyMap()
+outList = []
+for item in selectedList:
+	companyName = companyMap[str(item)]
+	fullName = '{}({})'.format(item,companyName)
+	outList.append(fullName)
+	print(fullName, end=' ')
 
-writeToFile = False
+writeToFile = True
+count = 0
 if(writeToFile):
-	with open('selected.txt', 'w') as f:
-		for item in selectedList:
+	with open('selected.txt', 'w', encoding='utf-8') as f:
+		for item in outList:
 			f.write("%s," % item)
+			count = count + 1 
+			if(count % 10 == 0):
+				f.write("\n")
+				
