@@ -15,7 +15,7 @@ df2 = df.astype(float)
 01前年度月|02前年度營收|03前年度年增率|04今年度月|05今年度營收|06今年度年增率|07今年度累計營收|08今年度累積營收年增率|09達成率
 一共9個欄位 12個月就有108個欄位
 """
-df3 = pd.read_csv('revenue.csv', header=None, index_col=0)
+df3 = pd.read_csv('revenue.csv', header=None, index_col=0, na_values=['-'])
 df4 = df3.astype(float)
 #print(df4.shape)
 
@@ -49,8 +49,8 @@ selectedList = df5[cond1 & cond2 & cond3 & cond6 & cond9].index.tolist()
 
 selectedList = df5[(df5[5*6+5-1] > 5) & (df5[5*6+6-1] > 5) & (df5[6+9*5+offset] > 20) & (df5[6+9*6+offset] > 20)].index.tolist()
 
-print(df5.loc[1808,[6+9*5+offset]])
-
+print(df5.loc[8928,[6+9*5+offset]])
+print(df5.loc[8928,[6+9*6+offset]])
 # ============================================================
 
 companyMap = getCompanyMap()

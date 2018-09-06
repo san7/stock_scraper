@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv('revenue.csv', header=None, index_col=0)
+df = pd.read_csv('revenue.csv', header=None, index_col=0, na_values=['-'])
 df2 = df.astype(float)
 #print(df2.shape)
 #print(df2.dtypes.value_counts())

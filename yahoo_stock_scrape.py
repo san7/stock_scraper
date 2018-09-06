@@ -42,7 +42,7 @@ with open('revenue.csv', 'a', newline='', encoding='utf-8') as fp:
 		dataList = bs.findAll('td', {'class':'ttt'})
 		revenueList.append(companyList[i])		
 		for j in range(startIdx, endIdx, stepSize):
-			tmpList = [re.sub(',|%|-', '', data.get_text()) for data in dataList[j : j + stepSize]]
+			tmpList = [re.sub(',|%', '', data.get_text()) for data in dataList[j : j + stepSize]]
 			revenueList.extend(tmpList)
 		writer.writerow(revenueList)
 		fp.flush()
