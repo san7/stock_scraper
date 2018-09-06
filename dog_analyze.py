@@ -24,33 +24,16 @@ df5 = pd.concat([df2,df4],axis=1,ignore_index=True)
 #print(df5.shape)
 #print(df5.columns.tolist())
 
-
-offset = 137
-
-# ============================================================
-# 挑201801單季毛利年增率 > 20%的股票 且 201802單季毛利年增率 > 20%的股票 且 六月累積營收年增率 > 20%的股票 且 七月累積營收年增率 > 20%的股票
-selectedList = df5[(df5[12*6+5-1] > 20) & (df5[12*6+6-1] > 20) & (df5[8+9*5+offset] > 20) & (df5[8+9*6+offset] > 20)].index.tolist()
-
-# ============================================================
-cond1 = df5[9*6+6-1] > 20 #09單季營收年增率
-cond2 = df5[21*6+6-1] > 20 #21單季EPS年增率
-cond3 = df5[9*6+6-1] > df5[9*6+5-1]
-cond4 = df5[9*6+5-1] > df5[9*6+4-1]
-cond5 = df5[9*6+4-1] > df5[9*6+3-1]
-cond6 = df5[21*6+6-1] > df5[21*6+5-1]
-cond7 = df5[21*6+5-1] > df5[21*6+4-1]
-cond8 = df5[21*6+4-1] > df5[21*6+3-1]
-cond9 = df5[6*6+6-1] > 5 #06ROE
-cond10 = df5[7*6+6-1] > 15 #07近四季ROE
-
-selectedList = df5[cond1 & cond2 & cond3 & cond6 & cond9].index.tolist()
+offset1 = -1 - 6 # -1是column index從0開始 -6是讓width的乘數可以直接使用欄位號碼
+width1 = 6 # 201701~201802 共6季
+offset2 = 138 - 1 - 9 # dog營收欄位共138個 -1是column index從0開始 -9是讓width2的乘數可以直接使用月份
+width2 = 9 # yahoo營收欄位共9個
 
 # ============================================================
 
-selectedList = df5[(df5[5*6+5-1] > 5) & (df5[5*6+6-1] > 5) & (df5[6+9*5+offset] > 20) & (df5[6+9*6+offset] > 20)].index.tolist()
+# 挑 201801 ROE > 20% 且 201802 ROE > 20% 且 六月營收年增率 > 20% 且 七月營收年增率 > 20% 的股票
+selectedList = df5[(df5[6*width1+5+offset1] > 5) & (df5[6*width1+6+offset1] > 5) & (df5[6+width2*6+offset2] > 20) & (df5[6+width2*7+offset2] > 20)].index.tolist()
 
-print(df5.loc[8928,[6+9*5+offset]])
-print(df5.loc[8928,[6+9*6+offset]])
 # ============================================================
 
 companyMap = getCompanyMap()
