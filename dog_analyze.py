@@ -7,12 +7,7 @@ import pandas as pd
 """
 df = pd.read_csv('dog.csv', header=None, index_col=0, na_values=['負','負轉正','無','前期為零'])
 df2 = df.astype(float)
-print(df2.shape)
-
-
-# 挑201801單季毛利年增率 > 20%的股票 且 201802單季毛利年增率 > 20%的股票
-selectedList = df2[(df2[12*6+5] > 20) & (df2[12*6+6] > 20)].index.tolist()
-print(selectedList)
+#print(df2.shape)
 
 """
 01前年度月|02前年度營收|03前年度年增率|04今年度月|05今年度營收|06今年度年增率|07今年度累計營收|08今年度累積營收年增率|09達成率
@@ -20,15 +15,44 @@ print(selectedList)
 """
 df3 = pd.read_csv('revenue.csv', header=None, index_col=0)
 df4 = df3.astype(float)
-print(df4.shape)
+#print(df4.shape)
 
 
 df5 = pd.concat([df2,df4],axis=1,ignore_index=True)
-print(df5.shape)
-print(df5.columns.tolist())
+#print(df5.shape)
+#print(df5.columns.tolist())
 
-# 挑201801單季毛利年增率 > 150%的股票 且 201802單季毛利年增率 > 200%的股票 且 六月累積營收年增率 > 60%的股票 且 挑七月累積營收年增率 > 40%的股票
+
 offset = 137
-selectedList = df5[(df5[12*6+5-1] > 150) & (df5[12*6+6-1] > 200) & (df5[8+9*5+offset] > 60) & (df5[8+9*6+offset] > 40)].index.tolist()
+
+# ============================================================
+# 挑201801單季毛利年增率 > 20%的股票 且 201802單季毛利年增率 > 20%的股票 且 六月累積營收年增率 > 20%的股票 且 七月累積營收年增率 > 20%的股票
+selectedList = df5[(df5[12*6+5-1] > 20) & (df5[12*6+6-1] > 20) & (df5[8+9*5+offset] > 20) & (df5[8+9*6+offset] > 20)].index.tolist()
+
+# ============================================================
+cond1 = df5[9*6+6-1] > 20 #09單季營收年增率
+cond2 = df5[21*6+6-1] > 20 #21單季EPS年增率
+cond3 = df5[9*6+6-1] > df5[9*6+5-1]
+cond4 = df5[9*6+5-1] > df5[9*6+4-1]
+cond5 = df5[9*6+4-1] > df5[9*6+3-1]
+cond6 = df5[21*6+6-1] > df5[21*6+5-1]
+cond7 = df5[21*6+5-1] > df5[21*6+4-1]
+cond8 = df5[21*6+4-1] > df5[21*6+3-1]
+cond9 = df5[6*6+6-1] > 5 #06ROE
+cond10 = df5[7*6+6-1] > 15 #07近四季ROE
+
+selectedList = df5[cond1 & cond2 & cond3 & cond6 & cond9].index.tolist()
+# ============================================================
+
+selectedList = df5[(df5[5*6+5-1] > 5) & (df5[5*6+6-1] > 5) & (df5[6+9*5+offset] > 20) & (df5[6+9*6+offset] > 20)].index.tolist()
+print(df5.loc[1808,[6+9*5+offset]])
+
+# ============================================================
+
 print(selectedList)
 
+writeToFile = False
+if(writeToFile):
+	with open('selected.txt', 'w') as f:
+		for item in selectedList:
+			f.write("%s," % item)
