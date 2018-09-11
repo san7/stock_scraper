@@ -31,15 +31,15 @@ width2 = 9 # yahoo營收欄位共9個
 
 # ============================================================
 
-# 挑 201801 ROE > 20% 且 201802 ROE > 20% 且 六月營收年增率 > 20% 且 七月營收年增率 > 20% 的股票
-selectedList = df5[(df5[6*width1+5+offset1] > 5) & (df5[6*width1+6+offset1] > 5) & (df5[6+width2*6+offset2] > 20) & (df5[6+width2*7+offset2] > 20)].index.tolist()
+# 挑 201801 ROE > 1% 且 201802 ROE > 1% 且 六月營收年增率 > 20% 且 七月營收年增率 > 20% 的股票
+selectedList = df5[(df5[6*width1+5+offset1] > 1) & (df5[6*width1+6+offset1] > 1) & (df5[6+width2*6+offset2] > 20) & (df5[6+width2*7+offset2] > 20)].index.tolist()
 
 # ============================================================
 
 companyMap = getCompanyMap()
 outList = []
 for item in selectedList:
-	companyName = companyMap[str(item)]
+	companyName = companyMap[str(item)].name
 	fullName = '{}({})'.format(item,companyName)
 	outList.append(fullName)
 	print(fullName, end=' ')

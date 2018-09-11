@@ -44,9 +44,8 @@ proxies = {
 
 headers = {'User-Agent' : MY_USER_AGENT}
 
-companyList = getCompanyList()
-#print(companyList)
-lastIndex = getLastCompanyIndex('dog.csv', companyList)
+companyIdList = getCompanyIdList()
+lastIndex = getLastCompanyIdIndex('dog.csv', companyIdList)
 
 input("Press Enter to continue...")
 
@@ -64,15 +63,15 @@ with open('dog.csv', 'a', newline='', encoding='utf-8') as fp:
 	writer = csv.writer(fp)
 	if(lastIndex != 0):
 		lastIndex = lastIndex + 1
-	for i in range(lastIndex, len(companyList)):
-		print("scrape company " + companyList[i] + "...")
+	for i in range(lastIndex, len(companyIdList)):
+		print("scrape company " + companyIdList[i] + "...")
 		compStatsList = []
 		isNoErr = True
-		url = 'https://statementdog.com/api/v1/fundamentals/{}/2017/1/2018/4/cf?queried_by_user=true&_=15'.format(companyList[i])
+		url = 'https://statementdog.com/api/v1/fundamentals/{}/2017/1/2018/4/cf?queried_by_user=true&_=15'.format(companyIdList[i])
 		try:
 			r3 = session.get(url, headers = headers, proxies=proxies)
 			jsonObj = json.loads(r3.text)
-			compStatsList.append(companyList[i])
+			compStatsList.append(companyIdList[i])
 			for dataId in targetDataIdList:
 				for seasonIdx in range(seasonNum):
 					#print(jsonObj[dataId]['data'][seasonIdx][1])

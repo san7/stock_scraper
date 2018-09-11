@@ -15,9 +15,8 @@ opener.addheaders = [('User-agent', MY_USER_AGENT)]
 urlrequest.install_opener(opener)
 
 
-companyList = getCompanyList()
-#print(companyList)
-lastIndex = getLastCompanyIndex('revenue.csv', companyList)
+companyIdList = getCompanyIdList()
+lastIndex = getLastCompanyIdIndex('revenue.csv', companyIdList)
 
 input("Press Enter to continue...")
 
@@ -31,16 +30,16 @@ with open('revenue.csv', 'a', newline='', encoding='utf-8') as fp:
 	writer = csv.writer(fp)
 	if(lastIndex != 0):
 		lastIndex = lastIndex + 1
-	for i in range(lastIndex, len(companyList)):
-		print("scrape company " + companyList[i] + "...")
+	for i in range(lastIndex, len(companyIdList)):
+		print("scrape company " + companyIdList[i] + "...")
 		revenueList = []
 		try:
-			html = urlrequest.urlopen('https://tw.stock.yahoo.com/d/s/earning_{}.html'.format(companyList[i]))
+			html = urlrequest.urlopen('https://tw.stock.yahoo.com/d/s/earning_{}.html'.format(companyIdList[i]))
 		except HTTPError as e:
 			print(e)
 		bs = BeautifulSoup(html.read(), 'html.parser')
 		dataList = bs.findAll('td', {'class':'ttt'})
-		revenueList.append(companyList[i])		
+		revenueList.append(companyIdList[i])		
 		for j in range(startIdx, endIdx, stepSize):
 			tmpList = [re.sub(',|%', '', data.get_text()) for data in dataList[j : j + stepSize]]
 			revenueList.extend(tmpList)
