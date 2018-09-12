@@ -22,14 +22,14 @@ df2 = df2.astype(float)
 #print(df2.shape)
 
 """
-股價,一個欄位
+加入目前股價欄位
 """
 df3 = pd.read_csv('company.csv', header=None, index_col=0)
 df3 = df3.drop(1, axis=1)
 df3 = df3.astype(float)
 
 """
-final_df總共有247個欄位
+final_df總共有247個欄位(138+108+1)
 """
 final_df = pd.concat([df1,df2,df3], axis=1, join_axes=[df1.index], ignore_index = True)
 #print(org_df.shape)
@@ -59,7 +59,8 @@ selectedList = final_df[(final_df[6*width1+5+offset1] > 1) & (final_df[6*width1+
 
 # ============================================================
 
-selectedList = final_df[(final_df[7*width1+6+offset1] > 20) & (final_df[248] > 8)].index.tolist()
+# 挑近四季ROE大於20 且 外部股東報酬率大於8% 的股票
+selectedLiadd analysis fieldst = final_df[(final_df[7*width1+6+offset1] > 20) & (final_df[248] > 8)].index.tolist()
 
 # ============================================================
 
