@@ -59,11 +59,11 @@ selectedList = final_df[(final_df[6*width1+5+offset1] > 1) & (final_df[6*width1+
 
 # ============================================================
 
-# 挑近四季ROE大於20 且 外部股東報酬率大於8% 的股票
+# 挑近四季ROE大於 20% 且 外部股東報酬率大於 8% 的股票
 selectedList = final_df[(final_df[7*width1+6+offset1] > 20) & (final_df[248] > 8)].index.tolist()
 
-
 # ============================================================
+
 
 outList = []
 for item in selectedList:
