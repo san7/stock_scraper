@@ -46,6 +46,6 @@ def getCompanyMap():
 	with open('company.csv', encoding='utf-8') as fp:
 		for line in fp:
 			splittedData = line.split(',')
-			companyMap[splittedData[0]] = Company(splittedData[1],splittedData[2])
+			companyMap[splittedData[0]] = Company(splittedData[1],splittedData[2][:-1])
 	return companyMap
 
