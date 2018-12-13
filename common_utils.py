@@ -12,7 +12,6 @@ def getUserCtx():
 	with open('security.txt', encoding='utf-8') as fp:
 		line = fp.readline()
 		splittedData = line.split(',')
-		print(splittedData[0], splittedData[1])
 		return UserCtx(splittedData[0], splittedData[1])
 	
 def getCompanyIdList():
