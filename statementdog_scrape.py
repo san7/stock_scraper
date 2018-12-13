@@ -33,13 +33,16 @@ from common_utils import *
 "125":{"label":"近4季EPS季增率"
 "126":{"label":"近4季EPS年增率"
 """
+
+# 可調整的參數
 targetDataIdList = ['65','66','77','95','96','99','101','107','108','109','110','111','112','113',
 	'114','115','116','117','118','123','124','125','126']
-seasonNum = 6
+queryRange = '2017/1/2018/4'
+seasonNum = 7
 
 proxies = {
-  'http': 'http://proxy.cht.com.tw:8080',
-  'https': 'https://proxy.cht.com.tw:8080',
+  'http' : HTTP_PROXY,
+  'https': HTTPS_PROXY
 }
 
 headers = {'User-Agent' : MY_USER_AGENT}
@@ -67,7 +70,7 @@ with open('dog.csv', 'a', newline='', encoding='utf-8') as fp:
 		print("scrape company " + companyIdList[i] + "...")
 		compStatsList = []
 		isNoErr = True
-		url = 'https://statementdog.com/api/v1/fundamentals/{}/2017/1/2018/4/cf?queried_by_user=true&_=15'.format(companyIdList[i])
+		url = 'https://statementdog.com/api/v1/fundamentals/{}/{}/cf?queried_by_user=true&_=15'.format(companyIdList[i], queryRange)
 		try:
 			r3 = session.get(url, headers = headers, proxies=proxies)
 			jsonObj = json.loads(r3.text)
