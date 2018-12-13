@@ -57,7 +57,8 @@ r1 = session.get('https://statementdog.com/users/sign_in', headers = headers, pr
 bs = BeautifulSoup(r1.text, 'html.parser')
 token = bs.select('input[name="authenticity_token"]')[0]['value']
 #print(token)
-params = {'authenticity_token' : token, 'user[email]': MY_DOG_USER_NAME, 'user[password]': MY_DOG_PASSWORD, 'user[remember_me]' : '1'}
+userCtx = getUserCtx()
+params = {'authenticity_token' : token, 'user[email]': userCtx.name, 'user[password]': userCtx.password, 'user[remember_me]' : '1'}
 r2 = session.post('https://statementdog.com/users/sign_in', headers = headers, data = params, proxies=proxies)
 print(r2)
 #print(r2.cookies.get_dict())
