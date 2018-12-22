@@ -38,12 +38,14 @@ from common_utils import *
 targetDataIdList = ['65','66','77','95','96','99','101','107','108','109','110','111','112','113',
 	'114','115','116','117','118','123','124','125','126']
 queryRange = '2017/1/2018/4'
-seasonNum = 7
+curSeasonNum = 7
 
-proxies = {
-  'http' : HTTP_PROXY,
-  'https': HTTPS_PROXY
-}
+use_proxy = False
+
+if use_proxy:
+	proxies = { 'http' : HTTP_PROXY, 'https': HTTPS_PROXY }
+else:
+	proxies = None
 
 headers = {'User-Agent' : MY_USER_AGENT}
 
@@ -77,7 +79,7 @@ with open('dog.csv', 'a', newline='', encoding='utf-8') as fp:
 			jsonObj = json.loads(r3.text)
 			compStatsList.append(companyIdList[i])
 			for dataId in targetDataIdList:
-				for seasonIdx in range(seasonNum):
+				for seasonIdx in range(curSeasonNum):
 					#print(jsonObj[dataId]['data'][seasonIdx][1])
 					compStatsList.append(jsonObj[dataId]['data'][seasonIdx][1])
 		except Exception as e:

@@ -5,10 +5,13 @@ import csv
 
 from common_utils import *
 
+use_proxy = False
+proxy_support = urlrequest.ProxyHandler({'http' : HTTP_PROXY, 'https': HTTPS_PROXY})
 
-proxy_support = urlrequest.ProxyHandler({'http' : HTTP_PROXY, 
-                                         'https': HTTPS_PROXY})
-opener = urlrequest.build_opener(proxy_support)
+if use_proxy:
+	opener = urlrequest.build_opener(proxy_support)
+else:
+	opener = urlrequest.build_opener()
 opener.addheaders = [('User-agent', MY_USER_AGENT)]
 urlrequest.install_opener(opener)
 
