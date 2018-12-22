@@ -88,7 +88,6 @@ selectedList = final_df[(final_df[9 * width1 + curSeasonNum + offset1] > 25) & \
 """
 
 # 最新的近四季ROE大於20
-print(final_df[7 * width1 + curSeasonNum + offset1])
 selectedList = final_df[(final_df[7 * width1 + curSeasonNum + offset1] > 20)].index.tolist()
 
 outList = []
