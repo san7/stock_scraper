@@ -45,7 +45,7 @@ final_df = pd.concat([df1,df2,df3], axis=1, join_axes=[df1.index], ignore_index 
 
 offset1 = -1 - curSeasonNum # 減去 1 是 column index 從 0 開始, 減去 curSeasonNum 是讓 width1 的乘數可以直接使用欄位號碼
 width1 = curSeasonNum
-offset2 = 138 - 1 - 9 # 營收欄位共138個 減去 1 是column index從 0 開始, 減去 9 是讓 width2 的乘數可以直接使用月份
+offset2 = (dogFieldNum * curSeasonNum) - 1 - 9 # 營收欄位共138個 減去 1 是column index從 0 開始, 減去 9 是讓 width2 的乘數可以直接使用月份
 width2 = 9 # 營收欄位寬度為9
 
 """
@@ -87,9 +87,10 @@ selectedList = final_df[(final_df[9 * width1 + curSeasonNum + offset1] > 25) & \
 	(final_df[6 * width1 + curSeasonNum + offset1] > 5) & (final_df[7 * width1 + curSeasonNum + offset1] > 20)].index.tolist()
 """
 
-# 最新的近四季ROE大於20
-selectedList = final_df[(final_df[7 * width1 + curSeasonNum + offset1] > 20)].index.tolist()
-
+# 
+selectedList = final_df[(final_df[6 * width1 + curSeasonNum + offset1] > final_df[6 * width1 + (curSeasonNum - 1) + offset1]) & \
+	(final_df[6 + width2 * curMonthNum + offset2] > 10)].index.tolist()
+	
 outList = []
 for item in selectedList:
 	try:
