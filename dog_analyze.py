@@ -5,7 +5,7 @@ from common_utils import *
 companyMap = getCompanyMap()
 
 # 可調整的參數
-dogFieldNum = 24
+dogFieldNum = 25
 curSeasonNum = 7
 curMonthNum = 2
 combinedFieldNum = (dogFieldNum * curSeasonNum) + 108 + 1
@@ -14,7 +14,7 @@ combinedFieldNum = (dogFieldNum * curSeasonNum) + 108 + 1
 """
 01EPS|02近四季EPS|03每股淨值|04毛利率|05營業利益率|06ROE|07近四季ROE|08單季營收季增率|09單季營收年增率|10近4季營收季增率|11近4季營收年增率|
 12單季毛利季增率|13單季毛利年增率|14近4季毛利季增率|15近4季毛利年增率|16單季營業利益季增率|17單季營業利益年增率|18近4季營業利益季增率|19近4季營業利益年增率|
-20單季EPS季增率|21單季EPS年增率|22近4季EPS季增率|23近4季EPS年增率|24近四季 F 分數
+20單季EPS季增率|21單季EPS年增率|22近4季EPS季增率|23近4季EPS年增率|24近四季 F 分數|25近四季自由現金流報酬率
 共 dogFieldNum * curSeasonNum 欄位
 """
 df1 = pd.read_csv('dog.csv', header=None, index_col=0, na_values=['負','負轉正','無','前期為零'])
