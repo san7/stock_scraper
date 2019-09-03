@@ -6,8 +6,8 @@ companyMap = getCompanyMap()
 
 # 可調整的參數
 dogFieldNum = 25
-curSeasonNum = 7
-curMonthNum = 2
+curSeasonNum = 6
+curMonthNum = 7
 combinedFieldNum = (dogFieldNum * curSeasonNum) + 108 + 1
 
 
@@ -88,9 +88,9 @@ selectedList = final_df[(final_df[9 * width1 + curSeasonNum + offset1] > 25) & \
 """
 
 # 
-selectedList = final_df[(final_df[8 + width2 * curMonthNum + offset2] > 15) & 
-					(final_df[4 * width1 + curSeasonNum + offset1] > final_df[4 * width1 + curSeasonNum - 1 + offset1]) &
-					(final_df[6 * width1 + curSeasonNum + offset1] > 2) & (final_df[combinedFieldNum - 1] < 60)].index.tolist()
+selectedList = final_df[(final_df[6 + width2 * curMonthNum + offset2] > 10) & 
+	(final_df[6 + width2 * (curMonthNum - 2) + offset2] > 10) & 
+	(final_df[24 * width1 + curSeasonNum + offset1] > 7)].index.tolist()
 	
 outList = []
 for item in selectedList:

@@ -1,4 +1,3 @@
-from urllib import request as urlrequest
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 from time import sleep
@@ -8,15 +7,7 @@ import csv
 
 from common_utils import *
 
-use_proxy = False
-proxy_support = urlrequest.ProxyHandler({'http' : HTTP_PROXY, 'https': HTTPS_PROXY})
-
-if use_proxy:
-	opener = urlrequest.build_opener(proxy_support)
-else:
-	opener = urlrequest.build_opener()
-opener.addheaders = [('User-agent', MY_USER_AGENT)]
-urlrequest.install_opener(opener)
+urlReq = getUrlRequest(useProxy=True)
 
 
 companyIdList = getCompanyIdList()
@@ -38,7 +29,7 @@ with open('revenue.csv', 'a', newline='', encoding='utf-8') as fp:
 		print("scrape company " + companyIdList[i] + "...")
 		revenueList = []
 		try:
-			html = urlrequest.urlopen('https://tw.stock.yahoo.com/d/s/earning_{}.html'.format(companyIdList[i]))
+			html = urlReq.urlopen('https://tw.stock.yahoo.com/d/s/earning_{}.html'.format(companyIdList[i]))
 		except HTTPError as e:
 			print(e)
 		bs = BeautifulSoup(html.read(), 'html.parser')

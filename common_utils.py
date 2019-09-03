@@ -1,4 +1,5 @@
 from collections import namedtuple
+from urllib import request as urlrequest
 
 HTTP_PROXY = 'http://proxy.cht.com.tw:8080'
 HTTPS_PROXY = 'https://proxy.cht.com.tw:8080'
@@ -8,6 +9,16 @@ MY_USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KH
 UserCtx = namedtuple('User','name password')
 Company = namedtuple('Company','name price')
 
+def getUrlRequest(useProxy):
+    if useProxy:
+        proxy_support = urlrequest.ProxyHandler({'http' : HTTP_PROXY, 'https': HTTPS_PROXY})
+        opener = urlrequest.build_opener(proxy_support)
+    else:
+        opener = urlrequest.build_opener()
+    opener.addheaders = [('User-agent', MY_USER_AGENT)]
+    urlrequest.install_opener(opener)
+    return urlrequest
+    
 def getUserCtx():
 	with open('security.txt', encoding='utf-8') as fp:
 		line = fp.readline()
