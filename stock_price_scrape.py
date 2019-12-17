@@ -12,9 +12,8 @@ defaultBeginDate = date(2019,8,1)
 defaultEndDate = date.today()
 
 urlReq = getUrlRequest(useProxy=True)
-companyIdList = getCompanyIdList()
 
-companyIdList = [2330,2379]
+companyIdList = getCompanyIdList()
 
 def craw_one_month(stock_number,date):    
     url = "http://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=" + date.strftime('%Y%m%d') + "&stockNo=" + str(stock_number)
@@ -59,4 +58,4 @@ for cid in companyIdList:
     
     result.to_csv(('./price/{}.csv').format(cid))
     
-    time.sleep(3);
+    time.sleep(2);
