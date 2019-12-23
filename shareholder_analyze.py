@@ -6,5 +6,5 @@ df2 = df.astype(float)
 
 pd.set_option('display.max_columns',200)
 
-selectedList = df2[(df2[1] > df2[2])].index.tolist()
+selectedList = df2[(df2[1] > df2[2]) & (df2[2] > df2[3])].index.tolist()
 print(selectedList)

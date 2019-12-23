@@ -9,7 +9,7 @@ from common_utils import *
 
 urlReq = getUrlRequest(useProxy=True)
 companyIdList = getCompanyIdList()
-lastIndex = getLastCompanyIdIndex('revenue.csv', companyIdList)
+lastIndex = getLastCompanyIdIndex('shareholder.csv', companyIdList)
 
 input("Press Enter to continue...")
 
@@ -26,7 +26,11 @@ with open('shareholder.csv', 'a', newline='', encoding='utf-8') as fp:
 			print(e)
 		content = html.read().decode('utf-8')
 		index = content.find("大股東持有率(>1000張)")
+		if index == -1:
+			continue
 		index2 = content.rfind("data:",0,index)
+		if index2 == -1:
+			continue
 		data = content[index2 + 7 : index - 10]
 		dataList = data.split(", ")
 		shareholderList.append(companyIdList[i])		

@@ -26,6 +26,6 @@ with open('company.csv', 'w', newline='', encoding='utf-8') as fp:
 		writer.writerow(lineDataList)
 
 companyMap = getCompanyMap()
-print(companyMap['1102'].name)
-print(companyMap['1102'].price)
+print("end of scrape")
+
 
