@@ -35,6 +35,15 @@ with open('shareholder.csv', 'a', newline='', encoding='utf-8') as fp:
 		dataList = data.split(", ")
 		shareholderList.append(companyIdList[i])		
 		shareholderList.extend(dataList[:-8:-1])
+		index = content.find("平均張數/股東")
+		if index == -1:
+			continue
+		index2 = content.rfind("data:",0,index)
+		if index2 == -1:
+			continue
+		data = content[index2 + 7 : index - 10]
+		dataList = data.split(", ")
+		shareholderList.extend(dataList[:-8:-1])        
 		writer.writerow(shareholderList)
 		fp.flush()
 		sleep(1)

@@ -4,13 +4,23 @@ from common_utils import *
 
 companyMap = getCompanyMap()
 
+offset1 = 1 # 大股東持有率(>1000張)
+offset2 = 8 # 平均張數/股東
+
 df = pd.read_csv('shareholder.csv', header=None, index_col=0)
 df2 = df.astype(float)
 #print(df2)
 
 pd.set_option('display.max_columns',200)
 
-selectedList = df2[(df2[1] > df2[2]) & (df2[2] > df2[3]) & (df2[3] > df2[4])].index.tolist()
+#selectedList = df2[(df2[offset1] < df2[offset1 + 1]) & (df2[offset1 + 1] < df2[offset1 + 2]) & (df2[offset1 + 2] < df2[offset1 + 3])].index.tolist()
+#selectedList = df2[(df2[offset1] > df2[offset1 + 1]) & (df2[offset1 + 1] > df2[offset1 + 2]) & (df2[offset1 + 2] > df2[offset1 + 3])].index.tolist()
+
+#selectedList = df2[(df2[offset2] < df2[offset2 + 1]) & (df2[offset2 + 1] < df2[offset2 + 2]) & (df2[offset2 + 2] < df2[offset2 + 3])].index.tolist()
+#selectedList = df2[(df2[offset2] > df2[offset2 + 1]) & (df2[offset2 + 1] > df2[offset2 + 2]) & (df2[offset2 + 2] > df2[offset2 + 3])].index.tolist()
+
+selectedList = df2[(df2[offset1] > df2[offset1 + 1]) & (df2[offset1 + 1] > df2[offset1 + 2]) & (df2[offset1 + 2] > df2[offset1 + 3]) & \
+    (df2[offset2] > df2[offset2 + 1]) & (df2[offset2 + 1] > df2[offset2 + 2]) & (df2[offset2 + 2] > df2[offset2 + 3])].index.tolist()
 
 outList = []
 for item in selectedList:
