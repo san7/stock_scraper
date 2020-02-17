@@ -7,6 +7,7 @@ import csv
 
 from common_utils import *
 
+ignoredCompanyList = ['2923'] 
 urlReq = getUrlRequest(useProxy=True)
 companyIdList = getCompanyIdList()
 lastIndex = getLastCompanyIdIndex('shareholder.csv', companyIdList)
@@ -18,6 +19,8 @@ with open('shareholder.csv', 'a', newline='', encoding='utf-8') as fp:
 	if(lastIndex != 0):
 		lastIndex = lastIndex + 1
 	for i in range(lastIndex, len(companyIdList)):
+		if companyIdList[i] in ignoredCompanyList:
+			continue
 		print("scrape company " + companyIdList[i] + "...")
 		shareholderList = []
 		try:
