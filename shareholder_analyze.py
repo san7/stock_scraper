@@ -19,8 +19,12 @@ pd.set_option('display.max_columns',200)
 #selectedList = df2[(df2[offset2] < df2[offset2 + 1]) & (df2[offset2 + 1] < df2[offset2 + 2]) & (df2[offset2 + 2] < df2[offset2 + 3])].index.tolist()
 #selectedList = df2[(df2[offset2] > df2[offset2 + 1]) & (df2[offset2 + 1] > df2[offset2 + 2]) & (df2[offset2 + 2] > df2[offset2 + 3])].index.tolist()
 
-selectedList = df2[(df2[offset1] > df2[offset1 + 1]) & (df2[offset1 + 1] > df2[offset1 + 2]) & \
-    (df2[offset2] > df2[offset2 + 1]) & (df2[offset2 + 1] > df2[offset2 + 2])].index.tolist()
+#selectedList = df2[(df2[offset1] > df2[offset1 + 1]) & (df2[offset1 + 1] > df2[offset1 + 2]) & \
+#    (df2[offset2] > df2[offset2 + 1]) & (df2[offset2 + 1] > df2[offset2 + 2])].index.tolist()
+#selectedList = df2[(df2[offset1] < df2[offset1 + 1]) & (df2[offset1 + 1] < df2[offset1 + 2]) & \
+#    (df2[offset2] < df2[offset2 + 1]) & (df2[offset2 + 1] < df2[offset2 + 2])].index.tolist()
+
+selectedList = df2[(df2[offset1] - df2[offset1 + 1]) > 1].index.tolist()
 
 outList = []
 for item in selectedList:

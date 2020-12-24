@@ -39,8 +39,8 @@ from common_utils import *
 # 可調整的參數
 targetDataIdList = ['65','66','77','95','96','99','101','107','108','109','110','111','112','113',
 	'114','115','116','117','118','123','124','125','126','375','377']
-queryRange = '2018/1/2019/2'
-curSeasonNum = 6
+queryRange = '2019/1/2020/3'
+curSeasonNum = 7
 
 use_proxy = True
 

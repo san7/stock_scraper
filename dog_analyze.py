@@ -6,8 +6,8 @@ companyMap = getCompanyMap()
 
 # 可調整的參數
 dogFieldNum = 25
-curSeasonNum = 6
-curMonthNum = 7
+curSeasonNum = 7
+curMonthNum = 10
 combinedFieldNum = (dogFieldNum * curSeasonNum) + 108 + 1
 
 
@@ -59,38 +59,34 @@ final_df[combinedFieldNum] = final_df[combinedFieldNum - 1] / final_df[3 * width
 final_df[combinedFieldNum + 1] = final_df[7 * width1 + curSeasonNum + offset1] / final_df[combinedFieldNum]
 
 # ============================================================
-
 # 挑最新一季ROE>1% 且 上季ROE>1% 且 最新月份營收年增率>20% 且 上個月營收年增率>20% 的股票
 selectedList = final_df[(final_df[6 * width1 + curSeasonNum + offset1] > 1) & (final_df[6 * width1 + curSeasonNum - 1 + offset1] > 1) & \
 	(final_df[6 + width2 * curMonthNum + offset2] > 20) & (final_df[6 + width2 * (curMonthNum - 1) + offset2] > 20)].index.tolist()
 
 # ============================================================
-
 # 挑最新的近四季ROE大於20% 且 外部股東報酬率大於8%的股票
 selectedList = final_df[(final_df[7 * width1 + curSeasonNum + offset1] > 20) & (final_df[combinedFieldNum + 1] > 8)].index.tolist()
 
 # ============================================================
-
-"""
-本季營收年增率>=25%
-近二季營收年增率是遞增的
-本季EPS年增率>=25%
-近二季EPS年增率是遞增的
-本季ROE>=5%
-近四季ROE>=20%
-"""
-"""
+# 本季營收年增率>=25%
+# 近二季營收年增率是遞增的
+# 本季EPS年增率>=25%
+# 近二季EPS年增率是遞增的
+# 本季ROE>=5%
+# 近四季ROE>=20%
 selectedList = final_df[(final_df[9 * width1 + curSeasonNum + offset1] > 25) & \
 	(final_df[9 * width1 + curSeasonNum + offset1] > final_df[9 * width1 + (curSeasonNum - 1) + offset1]) & \
 	(final_df[21 * width1 + curSeasonNum + offset1] > 25) & \
 	(final_df[21 * width1 + curSeasonNum + offset1] > final_df[21 * width1 + (curSeasonNum - 1) + offset1]) & \
 	(final_df[6 * width1 + curSeasonNum + offset1] > 5) & (final_df[7 * width1 + curSeasonNum + offset1] > 20)].index.tolist()
-"""
 
-# 
-selectedList = final_df[(final_df[6 + width2 * curMonthNum + offset2] > 10) & 
-	(final_df[6 + width2 * (curMonthNum - 2) + offset2] > 10) & 
-	(final_df[24 * width1 + curSeasonNum + offset1] > 7)].index.tolist()
+# ============================================================ 
+selectedList = final_df[
+				(final_df[8 + width2 * (curMonthNum - 1) + offset2] > final_df[8 + width2 * (curMonthNum - 2) + offset2]) & \
+				(final_df[8 + width2 * curMonthNum + offset2] > final_df[8 + width2 * (curMonthNum - 1) + offset2]) & \
+				(final_df[8 + width2 * (curMonthNum - 2) + offset2] > final_df[8 + width2 * (curMonthNum - 3) + offset2])
+			].index.tolist()
+
 	
 outList = []
 for item in selectedList:
